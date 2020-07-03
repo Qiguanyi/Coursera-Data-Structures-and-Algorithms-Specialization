@@ -17,28 +17,34 @@ def write_responses(result):
 def process_queries(queries):
     result = []
     # Keep list of all existing (i.e. not deleted yet) contacts.
-    contacts = []
+    contacts = ['not found'] * (pow(10, 7))
     for cur_query in queries:
         if cur_query.type == 'add':
+            
+            contacts[cur_query.number] = cur_query.name
+            
             # if we already have contact with such number,
             # we should rewrite contact's name
-            for contact in contacts:
-                if contact.number == cur_query.number:
-                    contact.name = cur_query.name
-                    break
-            else: # otherwise, just add it
-                contacts.append(cur_query)
+#            for contact in contacts:
+#                if contact.number == cur_query.number:
+#                    contact.name = cur_query.name
+#                    break
+#            else: # otherwise, just add it
+#                contacts.append(cur_query)
         elif cur_query.type == 'del':
-            for j in range(len(contacts)):
-                if contacts[j].number == cur_query.number:
-                    contacts.pop(j)
-                    break
+            
+            contacts[cur_query.number] = 'not found'
+            
+#            for j in range(len(contacts)):
+#                if contacts[j].number == cur_query.number:
+#                    contacts.pop(j)
+#                    break
         else:
-            response = 'not found'
-            for contact in contacts:
-                if contact.number == cur_query.number:
-                    response = contact.name
-                    break
+            response = contacts[cur_query.number]
+#            for contact in contacts:
+#                if contact.number == cur_query.number:
+#                    response = contact.name
+#                    break
             result.append(response)
     return result
 
