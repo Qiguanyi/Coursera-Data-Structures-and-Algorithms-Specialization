@@ -20,21 +20,60 @@ class TreeOrders:
     self.result = []
     # Finish the implementation
     # You may need to add a new recursive method to do that
-                
+    def recur(idx):
+        if self.left[idx] != -1 and self.right[idx] != -1:
+            recur(self.left[idx])
+            self.result += [self.key[idx]]
+            recur(self.right[idx])
+        elif self.left[idx] != -1:
+            recur(self.left[idx])
+            self.result += [self.key[idx]]
+        elif self.right[idx] != -1:
+            self.result += [self.key[idx]]
+            recur(self.right[idx])
+        else:
+            self.result += [self.key[idx]]
+    recur(0)
     return self.result
 
   def preOrder(self):
     self.result = []
     # Finish the implementation
     # You may need to add a new recursive method to do that
-                
+    def recur(idx):
+        if self.left[idx] != -1 and self.right[idx] != -1:
+            self.result += [self.key[idx]]
+            recur(self.left[idx])
+            recur(self.right[idx])
+        elif self.left[idx] != -1:
+            self.result += [self.key[idx]]
+            recur(self.left[idx])
+        elif self.right[idx] != -1:
+            self.result += [self.key[idx]]
+            recur(self.right[idx])
+        else:
+            self.result += [self.key[idx]]
+    recur(0)            
     return self.result
 
   def postOrder(self):
     self.result = []
     # Finish the implementation
     # You may need to add a new recursive method to do that
-                
+    def recur(idx):
+        if self.left[idx] != -1 and self.right[idx] != -1:
+            recur(self.left[idx])
+            recur(self.right[idx])
+            self.result += [self.key[idx]]
+        elif self.left[idx] != -1:
+            recur(self.left[idx])
+            self.result += [self.key[idx]]
+        elif self.right[idx] != -1:
+            recur(self.right[idx])
+            self.result += [self.key[idx]]
+        else:
+            self.result += [self.key[idx]]
+    recur(0)            
     return self.result
 
 def main():
