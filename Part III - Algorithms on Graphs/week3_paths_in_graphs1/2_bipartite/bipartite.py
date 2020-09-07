@@ -5,7 +5,22 @@ import queue
 
 def bipartite(adj):
     #write your code here
-    return -1
+    visited = [ None for _ in range(len(adj)) ]
+    q = queue.Queue()
+    for i in range(len(adj)):
+        if visited[i] is None:
+            visited[i] = True
+            q.put(i)
+            while not q.empty():
+                x = q.get()
+                value = visited[x]
+                for v in adj[x]:
+                    if visited[v] is None:
+                        q.put(v)
+                        visited[v] = not value
+                    elif visited[v] == value:
+                        return 0    
+    return 1
 
 if __name__ == '__main__':
     input = sys.stdin.read()

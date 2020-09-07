@@ -3,9 +3,26 @@
 import sys
 import queue
 
+
 def distance(adj, s, t):
     #write your code here
+    if s == t:
+        return 0
+    dist = [float('inf')] * len(adj)
+    dist[s] = 0
+    q = queue.Queue()
+    q.put(s)
+    while not q.empty():
+        u = q.get()
+        for v in adj[u]:
+            if dist[v] == float('inf'):
+                q.put(v)
+                dist[v] = dist[u] + 1
+                if v == t:
+                    return dist[v]
+    
     return -1
+
 
 if __name__ == '__main__':
     input = sys.stdin.read()

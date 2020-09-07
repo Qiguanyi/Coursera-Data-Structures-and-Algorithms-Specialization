@@ -1,14 +1,37 @@
-#Uses python3
-
 import sys
 import queue
 
 
 def shortet_paths(adj, cost, s, distance, reachable, shortest):
-    #write your code here
-    pass
+    n = len(adj)
+    distance[s] = 0
+    reachable[s] = 1
+    for _ in range(n - 1):
+        for u in range(n):
+            for i, v in enumerate(adj[u]):
+                d = distance[u] + cost[u][i]
+                if distance[v] > d:
+                    distance[v] = d
+                    reachable[v] = 1
+    Q = queue.Queue()
+    for u in range(n):
+        for i, v in enumerate(adj[u]):
+            d = distance[u] + cost[u][i]
+            if distance[v] > d:
+                Q.put(v)
+                shortest[v] = 0
+    shortest = bfs(adj, Q, shortest)
+    return distance, reachable, shortest
 
-
+def bfs(adj, Q, shortest):
+    while not Q.empty():
+        u = Q.get()
+        for v in adj[u]:
+            if shortest[v] == 1:
+                shortest[v] = 0
+                Q.put(v)
+    return shortest
+    
 if __name__ == '__main__':
     input = sys.stdin.read()
     data = list(map(int, input.split()))
@@ -23,10 +46,10 @@ if __name__ == '__main__':
         cost[a - 1].append(w)
     s = data[0]
     s -= 1
-    distance = [10**19] * n
+    distance = [float('inf')] * n
     reachable = [0] * n
     shortest = [1] * n
-    shortet_paths(adj, cost, s, distance, reachable, shortest)
+    distance, reachable, shortest = shortet_paths(adj, cost, s, distance, reachable, shortest)
     for x in range(n):
         if reachable[x] == 0:
             print('*')
@@ -34,4 +57,3 @@ if __name__ == '__main__':
             print('-')
         else:
             print(distance[x])
-

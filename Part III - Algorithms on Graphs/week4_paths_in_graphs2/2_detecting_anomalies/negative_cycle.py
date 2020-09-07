@@ -3,8 +3,30 @@
 import sys
 
 
+def relax(adj, dist, cost):
+    relaxed = False
+    for u in range(len(adj)):
+        for i, v in enumerate(adj[u]):
+            if dist[v] > dist[u] + cost[u][i]:
+                dist[v] = dist[u] + cost[u][i]
+                relaxed = True
+
+    return relaxed
+
+
 def negative_cycle(adj, cost):
-    #write your code here
+    n = len(adj)
+    adj.append(range(n))
+    cost.append([0] * n)
+    dist = [float('inf')] * (n + 1)
+    dist[n] = 0
+    for _ in range(n):
+        if not relax(adj, dist, cost):
+            return 0
+        
+    if relax(adj, dist, cost):
+        return 1
+    
     return 0
 
 
